@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RouteIQ — Smart Route Planner</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -35,10 +37,8 @@
       font-family: var(--font-body);
       font-size: 15px;
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
     }
 
-    /* Ambient background orb */
     body::before {
       content: '';
       position: fixed;
@@ -54,7 +54,6 @@
       z-index: 0;
     }
 
-    /* ─── Layout shells ─── */
     #loginPage, #appPage {
       position: relative;
       z-index: 1;
@@ -62,7 +61,6 @@
 
     .hidden { display: none !important; }
 
-    /* ─── LOGIN ─── */
     #loginPage {
       min-height: 100vh;
       display: flex;
@@ -85,7 +83,9 @@
     .login-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(108,99,255,0.8), transparent);
     }
@@ -121,7 +121,6 @@
       font-family: var(--font-display);
       font-size: 22px;
       font-weight: 700;
-      letter-spacing: -0.5px;
     }
 
     .login-logo-text span {
@@ -149,7 +148,7 @@
       margin-bottom: 8px;
     }
 
-    input[type="text"], input[type="email"], input[type="password"], input:not([type]) {
+    input, select {
       width: 100%;
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -159,10 +158,9 @@
       font-family: var(--font-body);
       font-size: 14px;
       outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    input:focus {
+    input:focus, select:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent-glow);
     }
@@ -182,36 +180,20 @@
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
       margin-top: 0.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-primary::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
-      pointer-events: none;
     }
 
     .btn-primary:hover {
       opacity: 0.92;
       box-shadow: 0 8px 32px rgba(108,99,255,0.45);
-      transform: translateY(-1px);
     }
 
-    .btn-primary:active { transform: scale(0.98); }
-
-    /* ─── APP SHELL ─── */
     #appPage {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* ─── TOPBAR ─── */
     .topbar {
       display: flex;
       align-items: center;
@@ -229,14 +211,14 @@
       font-family: var(--font-display);
       font-size: 18px;
       font-weight: 700;
-      letter-spacing: -0.3px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .topbar-logo .dot {
-      width: 8px; height: 8px;
+    .dot {
+      width: 8px;
+      height: 8px;
       background: var(--accent);
       border-radius: 50%;
       display: inline-block;
@@ -250,7 +232,6 @@
 
     #welcome {
       font-size: 13px;
-      font-weight: 400;
       color: var(--muted);
     }
 
@@ -267,16 +248,11 @@
       background: none;
       border: none;
       color: var(--muted);
-      font-family: var(--font-body);
       font-size: 13px;
-      font-weight: 500;
       padding: 7px 16px;
       border-radius: 8px;
       cursor: pointer;
-      transition: all 0.2s;
     }
-
-    .nav-tab:hover { color: var(--text); background: var(--surface2); }
 
     .nav-tab.active {
       background: var(--accent);
@@ -287,17 +263,12 @@
       background: none;
       border: 1px solid var(--border);
       color: var(--muted);
-      font-family: var(--font-body);
       font-size: 13px;
       padding: 7px 14px;
       border-radius: 10px;
       cursor: pointer;
-      transition: all 0.2s;
     }
 
-    .btn-ghost:hover { border-color: var(--border-active); color: var(--text); }
-
-    /* ─── MAIN CONTENT ─── */
     .main-content {
       flex: 1;
       max-width: 740px;
@@ -306,7 +277,6 @@
       padding: 2.5rem 1.5rem;
     }
 
-    /* ─── PAGE HEADERS ─── */
     .page-header {
       margin-bottom: 2rem;
     }
@@ -315,17 +285,14 @@
       font-family: var(--font-display);
       font-size: 26px;
       font-weight: 700;
-      letter-spacing: -0.5px;
       margin-bottom: 4px;
     }
 
     .page-subtitle {
       font-size: 13px;
       color: var(--muted);
-      font-weight: 300;
     }
 
-    /* ─── CARD ─── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -344,7 +311,6 @@
       margin-bottom: 1rem;
     }
 
-    /* ─── ADD PERSON FORM ─── */
     .input-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -352,40 +318,34 @@
       margin-bottom: 10px;
     }
 
-    .btn-add {
+    .btn-add, .btn-action {
       background: var(--surface2);
       border: 1px solid var(--border);
       color: var(--text);
-      font-family: var(--font-body);
       font-size: 13px;
       font-weight: 500;
       padding: 11px 18px;
       border-radius: 10px;
       cursor: pointer;
-      transition: all 0.2s;
       display: flex;
       align-items: center;
       gap: 6px;
+      justify-content: center;
     }
 
-    .btn-add:hover {
+    .btn-add:hover, .btn-action:hover {
       border-color: var(--accent);
       color: var(--accent2);
       background: rgba(108,99,255,0.08);
     }
 
-    .btn-add svg {
-      width: 16px; height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-    }
-
-    /* ─── SEARCH ─── */
     .search-wrap {
       position: relative;
       margin-bottom: 1rem;
+    }
+
+    .search-wrap input {
+      padding-left: 40px;
     }
 
     .search-wrap svg {
@@ -393,26 +353,20 @@
       left: 14px;
       top: 50%;
       transform: translateY(-50%);
-      width: 16px; height: 16px;
+      width: 16px;
+      height: 16px;
       stroke: var(--muted2);
       fill: none;
       stroke-width: 2;
-      stroke-linecap: round;
-      pointer-events: none;
     }
 
-    .search-wrap input {
-      padding-left: 40px;
-    }
-
-    /* ─── PEOPLE LIST ─── */
     #peopleList {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .person-item {
+    .person-item, .route-stop {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -420,19 +374,11 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px 14px;
-      transition: border-color 0.2s;
-      animation: fadeUp 0.25s ease forwards;
     }
 
-    .person-item:hover { border-color: var(--border-active); }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .avatar {
-      width: 38px; height: 38px;
+    .avatar, .stop-number {
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), #a78bfa);
       display: flex;
@@ -445,22 +391,22 @@
       flex-shrink: 0;
     }
 
-    .person-info { flex: 1; min-width: 0; }
-
-    .person-name {
-      font-size: 14px;
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .person-info, .stop-info {
+      flex: 1;
+      min-width: 0;
     }
 
-    .person-address {
+    .person-name, .stop-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .person-address, .stop-addr {
       font-size: 12px;
       color: var(--muted);
-      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .btn-icon {
@@ -470,103 +416,14 @@
       cursor: pointer;
       padding: 6px;
       border-radius: 8px;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
+      font-size: 18px;
     }
 
-    .btn-icon:hover { color: var(--danger); background: rgba(248,113,113,0.1); }
-
-    .btn-icon svg {
-      width: 16px; height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
+    .btn-icon:hover {
+      color: var(--danger);
+      background: rgba(248,113,113,0.1);
     }
 
-    /* ─── ROUTE PAGE ─── */
-    .select-wrap {
-      position: relative;
-    }
-
-    select {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 40px 12px 16px;
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 14px;
-      outline: none;
-      appearance: none;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-
-    select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
-
-    .select-wrap::after {
-      content: '';
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 0; height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 6px solid var(--muted2);
-      pointer-events: none;
-    }
-
-    /* ─── ROUTE LIST ─── */
-    #routeList {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      position: relative;
-    }
-
-    .route-stop {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-      animation: fadeUp 0.25s ease forwards;
-      position: relative;
-    }
-
-    .route-stop:last-child { border-bottom: none; }
-
-    .stop-number {
-      width: 30px; height: 30px;
-      background: linear-gradient(135deg, var(--accent), #a78bfa);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: 12px;
-      font-weight: 700;
-      color: white;
-      flex-shrink: 0;
-    }
-
-    .stop-info { flex: 1; min-width: 0; }
-
-    .stop-name { font-size: 14px; font-weight: 500; }
-
-    .stop-addr {
-      font-size: 12px;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* ─── ACTION BUTTONS ROW ─── */
     .action-row {
       display: flex;
       gap: 10px;
@@ -577,34 +434,7 @@
     .btn-action {
       flex: 1;
       min-width: 120px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 11px 16px;
       border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-    }
-
-    .btn-action svg {
-      width: 16px; height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .btn-action:hover {
-      border-color: var(--border-active);
-      background: rgba(255,255,255,0.04);
     }
 
     .btn-action.accent {
@@ -613,22 +443,12 @@
       color: white;
     }
 
-    .btn-action.accent:hover {
-      opacity: 0.88;
-      box-shadow: 0 6px 24px rgba(108,99,255,0.4);
-    }
-
     .btn-action.success {
       background: rgba(74,222,128,0.1);
       border-color: rgba(74,222,128,0.3);
       color: var(--success);
     }
 
-    .btn-action.success:hover {
-      background: rgba(74,222,128,0.18);
-    }
-
-    /* ─── EMPTY STATE ─── */
     .empty-state {
       text-align: center;
       padding: 3rem 1rem;
@@ -641,41 +461,6 @@
       opacity: 0.4;
     }
 
-    .empty-state p { font-size: 14px; }
-
-    /* ─── STATS STRIP ─── */
-    .stats-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 1.5rem;
-    }
-
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      text-align: center;
-    }
-
-    .stat-value {
-      font-family: var(--font-display);
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--accent2);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-
-    /* ─── BADGE ─── */
     .badge {
       display: inline-flex;
       align-items: center;
@@ -686,10 +471,8 @@
       font-weight: 600;
       padding: 3px 8px;
       border-radius: 20px;
-      letter-spacing: 0.04em;
     }
 
-    /* ─── TOAST ─── */
     #toast {
       position: fixed;
       bottom: 2rem;
@@ -703,7 +486,7 @@
       font-size: 13px;
       opacity: 0;
       pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.3s;
       z-index: 999;
     }
 
@@ -712,44 +495,56 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* ─── RESPONSIVE ─── */
     @media (max-width: 520px) {
-      .topbar { padding: 0.8rem 1rem; }
-      .main-content { padding: 1.5rem 1rem; }
-      .input-row { grid-template-columns: 1fr; }
-      .stats-strip { grid-template-columns: 1fr 1fr; }
+      .topbar {
+        padding: 0.8rem 1rem;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .main-content {
+        padding: 1.5rem 1rem;
+      }
+
+      .input-row {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- ─── LOGIN PAGE ─── -->
 <div id="loginPage">
   <div class="login-card">
     <div class="login-logo">
       <div class="login-logo-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
       </div>
       <span class="login-logo-text">Route<span>IQ</span></span>
     </div>
+
     <p class="login-tagline">Plan smarter routes. Reach more people. Save more time.</p>
 
     <div class="form-group">
       <label class="form-label" for="email">Email</label>
       <input id="email" type="email" placeholder="you@example.com">
     </div>
+
     <div class="form-group">
       <label class="form-label" for="password">Password</label>
       <input id="password" type="password" placeholder="••••••••">
     </div>
+
     <button class="btn-primary" onclick="login()">Sign in →</button>
   </div>
 </div>
 
-<!-- ─── APP PAGE ─── -->
 <div id="appPage" class="hidden">
-
-  <!-- Topbar -->
   <div class="topbar">
     <div class="topbar-logo">
       <span class="dot"></span> RouteIQ
@@ -766,10 +561,8 @@
     </div>
   </div>
 
-  <!-- Main content -->
   <div class="main-content">
 
-    <!-- ─── PEOPLE PAGE ─── -->
     <section id="peoplePage">
       <div class="page-header">
         <h1 class="page-title">People</h1>
@@ -782,21 +575,20 @@
           <input id="personName" placeholder="Full name">
           <input id="personAddress" placeholder="Address">
         </div>
-        <button class="btn-add" onclick="addPerson()">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add person
-        </button>
+        <button class="btn-add" onclick="addPerson()">＋ Add person</button>
       </div>
 
       <div class="search-wrap">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
         <input id="searchPeople" placeholder="Search people…" oninput="loadPeople()">
       </div>
 
       <div id="peopleList"></div>
     </section>
 
-    <!-- ─── ROUTE PAGE ─── -->
     <section id="routePage" class="hidden">
       <div class="page-header">
         <h1 class="page-title">Route</h1>
@@ -810,20 +602,17 @@
 
       <div class="card">
         <div class="card-title">Add a stop</div>
-        <div class="select-wrap" style="margin-bottom: 10px;">
-          <select id="personSelect"></select>
-        </div>
-        <button class="btn-add" onclick="addToRoute()">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add to route
-        </button>
+        <select id="personSelect"></select>
+        <br><br>
+        <button class="btn-add" onclick="addToRoute()">＋ Add to route</button>
       </div>
 
-      <div class="card" id="routeCard">
+      <div class="card">
         <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
           <div class="card-title" style="margin-bottom:0;">Stops</div>
           <span class="badge" id="stopCount">0 stops</span>
         </div>
+
         <div id="routeList">
           <div class="empty-state">
             <div class="empty-state-icon">📍</div>
@@ -833,106 +622,19 @@
       </div>
 
       <div class="action-row">
-        <button class="btn-action accent" id="smartBtn" onclick="smartRoute()">
-          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          Smart Route
-        </button>
-        <button class="btn-action success" onclick="openGoogleMaps()">
-          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Open in Maps
-        </button>
-        <button class="btn-action" onclick="doneRoute()">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          Done
-        </button>
+        <button class="btn-action accent" id="smartBtn" onclick="smartRoute()">⚡ Smart Route</button>
+        <button class="btn-action success" onclick="openGoogleMaps()">📍 Open in Maps</button>
+        <button class="btn-action" onclick="doneRoute()">✓ Done</button>
       </div>
     </section>
 
   </div>
 </div>
 
-<!-- Toast -->
 <div id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="app.js"></script>
-<script>
-  // ─── UI helpers (override/extend app.js patterns) ───
 
-  function showPage(page) {
-    document.getElementById('peoplePage').classList.toggle('hidden', page !== 'people');
-    document.getElementById('routePage').classList.toggle('hidden', page !== 'route');
-    document.getElementById('tab-people').classList.toggle('active', page === 'people');
-    document.getElementById('tab-route').classList.toggle('active', page === 'route');
-    if (page === 'route') populatePersonSelect();
-  }
-
-  function showToast(msg, duration = 2800) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), duration);
-  }
-
-  // Render people list — replaces app.js loadPeople if needed
-  function renderPeople(people) {
-    const list = document.getElementById('peopleList');
-    if (!people || people.length === 0) {
-      list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">👥</div><p>No people yet — add someone above</p></div>`;
-      return;
-    }
-    list.innerHTML = people.map((p, i) => `
-      <div class="person-item">
-        <div class="avatar">${initials(p.name)}</div>
-        <div class="person-info">
-          <div class="person-name">${esc(p.name)}</div>
-          <div class="person-address">${esc(p.address || '—')}</div>
-        </div>
-        <button class="btn-icon" onclick="deletePerson('${p.id || i}')" title="Remove">
-          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-        </button>
-      </div>
-    `).join('');
-  }
-
-  // Render route list
-  function renderRoute(stops) {
-    const list = document.getElementById('routeList');
-    const badge = document.getElementById('stopCount');
-    badge.textContent = `${stops.length} stop${stops.length !== 1 ? 's' : ''}`;
-    if (!stops || stops.length === 0) {
-      list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📍</div><p>No stops yet — add people above</p></div>`;
-      return;
-    }
-    list.innerHTML = stops.map((s, i) => `
-      <div class="route-stop">
-        <div class="stop-number">${i + 1}</div>
-        <div class="stop-info">
-          <div class="stop-name">${esc(s.name)}</div>
-          <div class="stop-addr">${esc(s.address || '—')}</div>
-        </div>
-        <button class="btn-icon" onclick="removeFromRoute(${i})" title="Remove">
-          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-    `).join('');
-  }
-
-  function initials(name) {
-    if (!name) return '?';
-    return name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
-  }
-
-  function esc(str) {
-    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  function populatePersonSelect() {
-    // app.js should handle this, but fallback stub
-  }
-
-  // Patch login/logout display
-  const _origLogin = typeof login !== 'undefined' ? login : null;
-</script>
 </body>
 </html>
