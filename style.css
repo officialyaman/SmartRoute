@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 30px;
+  }
+  
+  .box, #appPage {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 700px;
+    margin: auto;
+  }
+  
+  input, select, button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+  }
+  
+  button {
+    cursor: pointer;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .person, .stop {
+    background: #eee;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+  }
+  
+  #smartBtn.locked {
+    background: green;
+  }
