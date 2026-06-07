@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Route Planner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="loginPage" class="box">
+  <h2>Login</h2>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<div id="appPage" class="hidden">
+  <h2 id="welcome"></h2>
+
+  <nav>
+    <button onclick="showPage('people')">People</button>
+    <button onclick="showPage('route')">Route</button>
+    <button onclick="logout()">Logout</button>
+  </nav>
+
+  <section id="peoplePage">
+    <h3>People</h3>
+    <input id="personName" placeholder="Full name">
+    <input id="personAddress" placeholder="Address">
+    <button onclick="addPerson()">Add Person</button>
+
+    <input id="searchPeople" placeholder="Search people" oninput="loadPeople()">
+    <div id="peopleList"></div>
+  </section>
+
+  <section id="routePage" class="hidden">
+    <h3>Route</h3>
+
+    <input id="startAddress" placeholder="Starting address">
+
+    <select id="personSelect"></select>
+    <button onclick="addToRoute()">Add to Route</button>
+
+    <div id="routeList"></div>
+
+    <button id="smartBtn" onclick="smartRoute()">Smart Route</button>
+    <button onclick="openGoogleMaps()">Open in Google Maps</button>
+    <button onclick="doneRoute()">Done</button>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+</body>
+</html>
