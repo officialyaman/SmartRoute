@@ -282,12 +282,17 @@ function smartRoute() {
   renderRoute();
   showToast("Smart Route locked.");
 }
-
 function openGoogleMaps() {
   const start = document.getElementById("startAddress").value.trim();
+  const end = document.getElementById("endAddress").value.trim();
 
   if (!start) {
     alert("Please enter a starting address.");
+    return;
+  }
+
+  if (!end) {
+    alert("Please enter an ending address.");
     return;
   }
 
@@ -296,19 +301,21 @@ function openGoogleMaps() {
     return;
   }
 
-  const cleanStops = [];
+  const waypoints = route
+    .map(p => p.address.trim())
+    .filter(address => address);
 
-  route.forEach(p => {
-    const address = p.address.trim();
-    if (address && !cleanStops.includes(address)) {
-      cleanStops.push(address);
-    }
-  });
+  let url = "https://www.google.com/maps/dir/?api=1";
+  url += `&travelmode=driving`;
+  url += `&origin=${encodeURIComponent(start)}`;
+  url += `&destination=${encodeURIComponent(end)}`;
 
-  if (!cleanStops.length) {
-    alert("No valid stops found.");
-    return;
+  if (waypoints.length > 0) {
+    url += `&waypoints=${encodeURIComponent(waypoints.join("|"))}`;
   }
+
+  window.open(url, "_blank");
+}
 
   const destination = cleanStops[cleanStops.length - 1];
   const waypoints = cleanStops.slice(0, -1);
