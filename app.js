@@ -12,15 +12,9 @@ async function login() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email,
-    password
-  });
+  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
+  if (error) return alert(error.message);
 
   currentUser = data.user;
 
@@ -32,19 +26,14 @@ async function login() {
 }
 
 async function loadProfile() {
-  const { data, error } = await supabaseClient
+  const { data } = await supabaseClient
     .from("profiles")
     .select("*")
     .eq("id", currentUser.id)
     .single();
 
-  if (error || !data) {
-    document.getElementById("welcome").innerText = "Asalamu Alaikum";
-    return;
-  }
-
   document.getElementById("welcome").innerText =
-    `Asalamu Alaikum, ${data.first_name}`;
+    data ? `Asalamu Alaikum, ${data.first_name}` : "Asalamu Alaikum";
 }
 
 async function logout() {
@@ -69,10 +58,7 @@ async function addPerson() {
   const full_name = document.getElementById("personName").value.trim();
   const address = document.getElementById("personAddress").value.trim();
 
-  if (!full_name || !address) {
-    alert("Please enter name and address.");
-    return;
-  }
+  if (!full_name || !address) return alert("Please enter name and address.");
 
   const { error } = await supabaseClient.from("people").insert({
     user_id: currentUser.id,
@@ -80,10 +66,7 @@ async function addPerson() {
     address
   });
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
+  if (error) return alert(error.message);
 
   document.getElementById("personName").value = "";
   document.getElementById("personAddress").value = "";
@@ -101,10 +84,7 @@ async function loadPeople() {
     .eq("user_id", currentUser.id)
     .order("created_at", { ascending: false });
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
+  if (error) return alert(error.message);
 
   people = data || [];
 
@@ -120,7 +100,7 @@ async function loadPeople() {
 function renderPeople(list) {
   const peopleList = document.getElementById("peopleList");
 
-  if (!list || list.length === 0) {
+  if (!list.length) {
     peopleList.innerHTML = `
       <div class="empty-state">
         <div class="empty-state-icon">👥</div>
@@ -137,9 +117,7 @@ function renderPeople(list) {
         <div class="person-name">${escapeHtml(p.full_name)}</div>
         <div class="person-address">${escapeHtml(p.address)}</div>
       </div>
-      <button class="btn-icon" onclick="deletePerson('${p.id}')" title="Delete">
-        ✕
-      </button>
+      <button class="btn-icon" onclick="deletePerson('${p.id}')">✕</button>
     </div>
   `).join("");
 }
@@ -161,15 +139,8 @@ function populatePersonSelect() {
 }
 
 async function deletePerson(id) {
-  const { error } = await supabaseClient
-    .from("people")
-    .delete()
-    .eq("id", id);
-
-  if (error) {
-    alert(error.message);
-    return;
-  }
+  const { error } = await supabaseClient.from("people").delete().eq("id", id);
+  if (error) return alert(error.message);
 
   route = route.filter(p => p.id !== id);
 
@@ -179,30 +150,15 @@ async function deletePerson(id) {
 }
 
 function addToRoute() {
-  if (routeLocked) {
-    alert("Route is locked. Press Done to start a new route.");
-    return;
-  }
+  if (routeLocked) return alert("Route is locked. Press Done to start a new route.");
 
   const id = document.getElementById("personSelect").value;
-
-  if (!id) {
-    alert("Please select a person.");
-    return;
-  }
-
   const person = people.find(p => p.id === id);
 
-  if (!person) {
-    alert("Person not found.");
-    return;
-  }
+  if (!person) return alert("Please select a person.");
 
-  const alreadyAdded = route.some(p => p.id === person.id);
-
-  if (alreadyAdded) {
-    alert("This person is already in the route.");
-    return;
+  if (route.some(p => p.id === person.id)) {
+    return alert("This person is already in the route.");
   }
 
   route.push(person);
@@ -211,10 +167,7 @@ function addToRoute() {
 }
 
 function removeFromRoute(index) {
-  if (routeLocked) {
-    alert("Route is locked. Press Done to reset it.");
-    return;
-  }
+  if (routeLocked) return alert("Route is locked. Press Done to reset it.");
 
   route.splice(index, 1);
   renderRoute();
@@ -224,9 +177,7 @@ function renderRoute() {
   const routeList = document.getElementById("routeList");
   const stopCount = document.getElementById("stopCount");
 
-  if (stopCount) {
-    stopCount.innerText = `${route.length} stop${route.length === 1 ? "" : "s"}`;
-  }
+  stopCount.innerText = `${route.length} stop${route.length === 1 ? "" : "s"}`;
 
   if (!route.length) {
     routeList.innerHTML = `
@@ -245,30 +196,18 @@ function renderRoute() {
         <div class="stop-name">${escapeHtml(p.full_name)}</div>
         <div class="stop-addr">${escapeHtml(p.address)}</div>
       </div>
-      <button class="btn-icon" onclick="removeFromRoute(${index})" title="Remove">
-        ✕
-      </button>
+      <button class="btn-icon" onclick="removeFromRoute(${index})">✕</button>
     </div>
   `).join("");
 }
 
 function smartRoute() {
-  if (routeLocked) {
-    alert("Smart Route is already locked.");
-    return;
-  }
+  if (routeLocked) return alert("Smart Route is already locked.");
 
   const start = document.getElementById("startAddress").value.trim();
 
-  if (!start) {
-    alert("Please enter a starting address.");
-    return;
-  }
-
-  if (route.length < 2) {
-    alert("Add at least 2 stops before using Smart Route.");
-    return;
-  }
+  if (!start) return alert("Please enter a starting address.");
+  if (route.length < 2) return alert("Add at least 2 stops before using Smart Route.");
 
   route.sort((a, b) => a.address.localeCompare(b.address));
 
@@ -282,59 +221,30 @@ function smartRoute() {
   renderRoute();
   showToast("Smart Route locked.");
 }
+
 function openGoogleMaps() {
   const start = document.getElementById("startAddress").value.trim();
-  const end = document.getElementById("endAddress").value.trim();
+  const end = document.getElementById("endAddress")?.value.trim();
 
-  if (!start) {
-    alert("Please enter a starting address.");
-    return;
-  }
-
-  if (!end) {
-    alert("Please enter an ending address.");
-    return;
-  }
-
-  if (!route.length) {
-    alert("Add at least one stop to the route.");
-    return;
-  }
+  if (!start) return alert("Please enter a starting address.");
+  if (!end) return alert("Please enter an ending address.");
+  if (!route.length) return alert("Add at least one stop to the route.");
 
   const waypoints = route
     .map(p => p.address.trim())
     .filter(address => address);
 
   let url = "https://www.google.com/maps/dir/?api=1";
-  url += `&travelmode=driving`;
+  url += "&travelmode=driving";
   url += `&origin=${encodeURIComponent(start)}`;
   url += `&destination=${encodeURIComponent(end)}`;
-
-  if (waypoints.length > 0) {
-    url += `&waypoints=${encodeURIComponent(waypoints.join("|"))}`;
-  }
-
-  window.open(url, "_blank");
-}
-
-  const destination = cleanStops[cleanStops.length - 1];
-  const waypoints = cleanStops.slice(0, -1);
-
-  let url = "https://www.google.com/maps/dir/?api=1";
-  url += `&travelmode=driving`;
-  url += `&origin=${encodeURIComponent(start)}`;
-  url += `&destination=${encodeURIComponent(destination)}`;
-
-  if (waypoints.length > 0) {
-    url += `&waypoints=${encodeURIComponent(waypoints.join("|"))}`;
-  }
+  url += `&waypoints=${encodeURIComponent(waypoints.join("|"))}`;
 
   window.open(url, "_blank");
 }
 
 function doneRoute() {
   const confirmReset = confirm("Are you sure? This will reset the route.");
-
   if (!confirmReset) return;
 
   route = [];
@@ -343,7 +253,7 @@ function doneRoute() {
   const btn = document.getElementById("smartBtn");
   btn.classList.remove("success");
   btn.classList.add("accent");
-  btn.innerText = "Smart Route";
+  btn.innerText = "⚡ Smart Route";
 
   renderRoute();
   showToast("New Route Created!");
@@ -370,10 +280,7 @@ function escapeHtml(text) {
 function showToast(message) {
   const toast = document.getElementById("toast");
 
-  if (!toast) {
-    alert(message);
-    return;
-  }
+  if (!toast) return alert(message);
 
   toast.innerText = message;
   toast.classList.add("show");
